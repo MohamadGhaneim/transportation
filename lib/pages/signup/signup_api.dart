@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:transportation/config/app_strings.dart';
 
 class SignupApi {
-  static void handleSignup({
+  static Future<void> handleSignup({
     required BuildContext context,
     required String email,
     required String password,
@@ -33,7 +33,7 @@ class SignupApi {
     try {
       final response = await http.post(
         Uri.parse(
-          AppStrings.url_api_signup, /// ngrok url
+          AppStrings.url_api_signup,
         ),
         body: {
           'email': email,
@@ -46,7 +46,7 @@ class SignupApi {
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("Signup : ${response.body}")));
+        ).showSnackBar(SnackBar(content: Text("Signup successful")));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Signup failed: ${response.statusCode}")),

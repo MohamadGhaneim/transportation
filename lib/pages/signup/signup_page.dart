@@ -1,16 +1,30 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:transportation/components/app_elevated_button.dart';
 import 'package:transportation/components/app_text_field.dart';
 import 'package:transportation/config/app_routes.dart';
 import 'package:transportation/pages/signup/signup_api.dart';
 import 'package:transportation/styles/app_colors.dart';
+import 'package:transportation/validation/input_validation.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   SignupPage({super.key});
 
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  String passwordMessage = "";
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final confirmPasswordController = TextEditingController();
+
   final phoneController = TextEditingController();
+
   final fullNameController = TextEditingController();
 
   @override
@@ -69,6 +83,29 @@ class SignupPage extends StatelessWidget {
                       hint: "Password",
                       icon: const Icon(Icons.lock),
                       controller: passwordController,
+                      obscureText: true,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.length < 6) {
+                            passwordMessage = "Password is too short";
+                          } else if (value.length > 10) {
+                            passwordMessage = "Password is too long";
+                          } else {
+                            passwordMessage = "Password length is valid";
+                          }
+                        });
+                      },
+                    ),
+
+                    Text(
+                      passwordMessage,
+                      style: TextStyle(
+                        color:
+                            passwordMessage.contains("valid")
+                                ? Colors.green
+                                : Colors.red,
+                        fontSize: 10,
+                      ),
                     ),
 
                     SizedBox(height: screenHeight * 0.02),
@@ -76,6 +113,7 @@ class SignupPage extends StatelessWidget {
                       hint: "Confirm Password",
                       icon: const Icon(Icons.lock),
                       controller: confirmPasswordController,
+                      obscureText: true,
                     ),
 
                     SizedBox(height: screenHeight * 0.02),
@@ -93,35 +131,38 @@ class SignupPage extends StatelessWidget {
                     ),
 
                     SizedBox(height: screenHeight * 0.04),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          SignupApi.handleSignup(
-                            context: context,
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            confirmPassword:
-                                confirmPasswordController.text.trim(),
-                            phone: phoneController.text.trim(),
-                            fullName: fullNameController.text.trim(),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.deepOrange,
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+
+                    AppElevatedButton(
+                      onPressed: () async {
+                        await SignupApi.handleSignup(
+                          context: context,
+                          email: InputValidation.cleanInput(
+                            emailController.text.trim(),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: screenHeight * 0.018,
+                          //////////////
+                          password: InputValidation.hashPassword(
+                            passwordController.text.trim(),
                           ),
-                        ),
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(fontSize: screenWidth * 0.04),
-                        ),
-                      ),
+                          confirmPassword: InputValidation.hashPassword(
+                            confirmPasswordController.text.trim(),
+                          ),
+                          //////////////////////////
+                          phone: InputValidation.cleanPhoneNumber(
+                            phoneController.text.trim(),
+                          ),
+                          fullName: InputValidation.cleanInput(
+                            fullNameController.text.trim(),
+                          ),
+                        );
+                        InputValidation.cleanInput(emailController.text);
+                        InputValidation.cleanInput(passwordController.text);
+                        InputValidation.cleanInput(
+                          confirmPasswordController.text,
+                        );
+                        InputValidation.cleanInput(phoneController.text);
+                        InputValidation.cleanInput(fullNameController.text);
+                      },
+                      text: "SignUp",
                     ),
                   ],
                 ),
