@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:transportation/components/app_elevated_button.dart';
 import 'package:transportation/components/app_text_field.dart';
 import 'package:transportation/config/app_routes.dart';
 import 'package:transportation/pages/signup/signup_api.dart';
 import 'package:transportation/styles/app_colors.dart';
+import 'package:transportation/validation/input_validation.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
@@ -93,35 +95,38 @@ class SignupPage extends StatelessWidget {
                     ),
 
                     SizedBox(height: screenHeight * 0.04),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          SignupApi.handleSignup(
-                            context: context,
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            confirmPassword:
-                                confirmPasswordController.text.trim(),
-                            phone: phoneController.text.trim(),
-                            fullName: fullNameController.text.trim(),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.deepOrange,
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+
+                    AppElevatedButton(
+                      onPressed: () async {
+                        await SignupApi.handleSignup(
+                          context: context,
+                          email: InputValidation.cleanInput(
+                            emailController.text.trim(),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: screenHeight * 0.018,
+                          //////////////
+                          password: InputValidation.hashPassword(
+                            passwordController.text.trim(),
                           ),
-                        ),
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(fontSize: screenWidth * 0.04),
-                        ),
-                      ),
+                          confirmPassword: InputValidation.hashPassword(
+                            confirmPasswordController.text.trim(),
+                          ),
+                          //////////////////////////
+                          phone: InputValidation.cleanPhoneNumber(
+                            phoneController.text.trim(),
+                          ),
+                          fullName: InputValidation.cleanInput(
+                            fullNameController.text.trim(),
+                          ),
+                        );
+                        InputValidation.cleanInput(emailController.text);
+                        InputValidation.cleanInput(passwordController.text);
+                        InputValidation.cleanInput(
+                          confirmPasswordController.text,
+                        );
+                        InputValidation.cleanInput(phoneController.text);
+                        InputValidation.cleanInput(fullNameController.text);
+                      },
+                      text: "SignUp",
                     ),
                   ],
                 ),

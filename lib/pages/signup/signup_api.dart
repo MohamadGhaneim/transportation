@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:transportation/config/app_strings.dart';
 
 class SignupApi {
-  static void handleSignup({
+  static Future<void> handleSignup({
     required BuildContext context,
     required String email,
     required String password,
@@ -33,7 +33,9 @@ class SignupApi {
     try {
       final response = await http.post(
         Uri.parse(
-          AppStrings.url_api_signup, /// ngrok url
+          AppStrings.url_api_signup,
+
+          /// ngrok url
         ),
         body: {
           'email': email,

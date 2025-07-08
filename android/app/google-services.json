@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "231708790194",
+    "project_id": "transmart-2185c",
+    "storage_bucket": "transmart-2185c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231708790194:android:8d230f56961adebc6268ab",
+        "android_client_info": {
+          "package_name": "com.transmart.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231708790194-0t0nb5a9gi1fh8a46c7eple6f58rggnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAluF9ofL5skGD0Xam6MrLf2s-XXbR1umU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231708790194-0t0nb5a9gi1fh8a46c7eple6f58rggnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231708790194:android:c22102fc4d7e38776268ab",
+        "android_client_info": {
+          "package_name": "com.transmart.users"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231708790194-0t0nb5a9gi1fh8a46c7eple6f58rggnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAluF9ofL5skGD0Xam6MrLf2s-XXbR1umU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231708790194-0t0nb5a9gi1fh8a46c7eple6f58rggnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

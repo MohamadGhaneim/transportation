@@ -17,7 +17,7 @@ class AppTextField extends StatelessWidget {
         //labelText: hint,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide.none, // بدون خط
+          borderSide: BorderSide.none, 
         ),
         filled: true,
         fillColor: Colors.white,
